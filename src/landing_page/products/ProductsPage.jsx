@@ -1,15 +1,14 @@
 import React from 'react';
+import Universe from './Universe';
 import Hero from './Hero';
-import Team from './Team';
 
-
-function AboutPage() {
+function ProductsPage() {
     return (
         <>
             <Hero/>
-            <Team/>        
+            <Universe/>      
         </>
     );
 }
 
-export default AboutPage;
+export default ProductsPage;
