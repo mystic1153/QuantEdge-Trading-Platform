@@ -4,13 +4,19 @@ function Hero() {
   return (
     <div className="container p-5 mb-5 mt-5" style={{
           background: "linear-gradient(180deg, #000000ff 100%, #ffffff 100%)", 
-          borderRadius: "20px"
+          borderRadius: "30px"
         }}>
       <div className="row text-center" >
         <img
           src="media/images/homeHero.png"
           alt="Hero Image"
           className="mb-5"
+          style={{ 
+            width: "100%", 
+            height: "auto",
+            // ADDED: Apply border radius to the image itself 
+            borderRadius: "30px" 
+          }}
         />
         <h1 className="mt-5 text-white">Invest in everything</h1>
         <p className="text-white">
