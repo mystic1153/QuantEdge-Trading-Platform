@@ -2,15 +2,18 @@ import React from "react";
 
 function Hero() {
   return (
-    <div className="container p-5 mb-5">
-      <div className="row text-center">
+    <div className="container p-5 mb-5 mt-5" style={{
+          background: "linear-gradient(180deg, #000000ff 100%, #ffffff 100%)", 
+          borderRadius: "20px"
+        }}>
+      <div className="row text-center" >
         <img
           src="media/images/homeHero.png"
           alt="Hero Image"
           className="mb-5"
         />
-        <h1 className="mt-5">Invest in everything</h1>
-        <p>
+        <h1 className="mt-5 text-white">Invest in everything</h1>
+        <p className="text-white">
           Online platform to invest in stocks, derivatives, mutual funds, and
           more
         </p>
