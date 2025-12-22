@@ -1,11 +1,34 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
+import axios from "axios";
+import { VerticalGraph } from "./VerticalGraph";
 
-import { holdings } from "../data/data";
 
 const Holdings = () => {
+
+  const [allHoldings, setAllHoldings] = useState([]);
+
+  useEffect(()=>{
+    axios.get("http://localhost:3002/allHoldings").then((res) => {
+      setAllHoldings(res.data);
+    });
+  }, []);
+
+  const labels = allHoldings.map((subArray) => subArray["name"]);
+
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: "Stock Price",
+        data: allHoldings.map((stock) => stock.price),
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
+      },
+    ],
+  };
+
   return (
     <>
-      <h3 className="title">Holdings ({holdings.length})</h3>
+      <h3 className="title">Holdings ({allHoldings.length})</h3>
 
       <div className="order-table">
         <table>
@@ -20,7 +43,7 @@ const Holdings = () => {
             <th>Day chg.</th>
           </tr>
 
-          {holdings.map((stock, index) => {
+          {allHoldings.map((stock, index) => {
             const curValue = stock.price * stock.qty;
             const isProfit = curValue - stock.avg * stock.qty >= 0.0;
             const profClass = isProfit ? "profit" : "loss";
@@ -62,6 +85,7 @@ const Holdings = () => {
           <p>P&L</p>
         </div>
       </div>
+       <VerticalGraph data={data} />
     </>
   );
 };
