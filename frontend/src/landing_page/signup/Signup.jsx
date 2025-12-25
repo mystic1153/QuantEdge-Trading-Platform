@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const DASHBOARD_URL =
-  process.env.REACT_APP_DASHBOARD_URL || "http://localhost:3000";
+  process.env.REACT_APP_DASHBOARD_URL || "http://localhost:3001";
+
+
+const BACKEND_URL =
+   process.env.REACT_APP_BACKEND_URL || "http://localhost:3002";
 
 function Signup() {
   const [email, setEmail] = useState("");
@@ -17,8 +21,8 @@ function Signup() {
 
       const url =
         mode === "signup"
-          ? "http://localhost:3002/auth/signup"
-          : "http://localhost:3002/auth/login";
+          ? `${BACKEND_URL}/auth/signup`
+          : `${BACKEND_URL}/auth/login`;
 
       const res = await axios.post(url, { email, password });
 
