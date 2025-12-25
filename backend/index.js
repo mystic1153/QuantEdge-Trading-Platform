@@ -352,8 +352,19 @@ app.post("/newOrder", async (req, res) => {
   }
 });
 
+// Connect to MongoDB with retry logic
+const connectDB = async () => {
+  try {
+    await mongoose.connect(url);
+    console.log("MongoDB connected successfully!");
+  } catch (err) {
+    console.error("MongoDB connection error:", err);
+    console.log("Retrying MongoDB connection in 5 seconds...");
+    setTimeout(connectDB, 5000);
+  }
+};
+
 app.listen(PORT, () => {
-  console.log("App started!");
-  mongoose.connect(url);
-  console.log("DB started!");
+  console.log(`Backend server started on port ${PORT}!`);
+  connectDB();
 });

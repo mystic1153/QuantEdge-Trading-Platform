@@ -1,0 +1,68 @@
+version: "3.9"
+
+services:
+  mongo:
+    image: mongo:7
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - quantedge-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    depends_on:
+      - mongo
+    environment:
+      - NODE_ENV=production
+      - PORT=3002
+      - MONGO_URL=mongodb://mongo:27017/quantedge
+    ports:
+      - "3002:3002"
+    networks:
+      - quantedge-network
+    restart: unless-stopped
+
+  dashboard-new:
+    build:
+      context: ./dashboard-new
+      dockerfile: Dockerfile
+      args:
+        # Build args for React build-time variables
+        REACT_APP_BACKEND_URL: http://backend:3002
+    depends_on:
+      - backend
+    ports:
+      - "3001:80"
+    networks:
+      - quantedge-network
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        # Build args for React build-time variables
+        REACT_APP_BACKEND_URL: http://backend:3002
+        REACT_APP_DASHBOARD_URL: http://dashboard-new:3001
+    depends_on:
+      - backend
+      - dashboard-new
+    ports:
+      - "3000:80"
+    networks:
+      - quantedge-network
+    restart: unless-stopped
+
+networks:
+  quantedge-network:
+    driver: bridge
+
+volumes:
+  mongo_data:
+
