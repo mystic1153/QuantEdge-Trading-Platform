@@ -12,6 +12,7 @@ services:
       - quantedge-network
 
   backend:
+    image: yug02/quantedge-backend:latest
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -28,6 +29,7 @@ services:
     restart: unless-stopped
 
   dashboard-new:
+    image: yug02/quantedge-dashboard-new:latest
     build:
       context: ./dashboard-new
       dockerfile: Dockerfile
@@ -43,6 +45,7 @@ services:
     restart: unless-stopped
 
   frontend:
+    image: yug02/quantedge-frontend:latest
     build:
       context: ./frontend
       dockerfile: Dockerfile
