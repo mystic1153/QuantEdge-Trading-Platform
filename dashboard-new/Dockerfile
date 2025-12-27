@@ -8,14 +8,6 @@ RUN npm ci --fetch-timeout=600000
 
 COPY . .
 
-# Accept build arguments (passed from docker-compose.yml or build command)
-ARG REACT_APP_BACKEND_URL
-
-# Set as environment variables for npm run build
-# React reads REACT_APP_* vars ONLY during build, not at runtime
-ENV REACT_APP_BACKEND_URL=${REACT_APP_BACKEND_URL}
-
-# Build the React app - REACT_APP_* vars are baked into the bundle
 RUN npm run build
 
 # Stage 2: Serve with nginx

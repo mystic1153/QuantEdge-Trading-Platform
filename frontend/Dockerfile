@@ -8,16 +8,6 @@ RUN npm install
 
 COPY . .
 
-# Accept build arguments (passed from docker-compose.yml or build command)
-ARG REACT_APP_BACKEND_URL
-ARG REACT_APP_DASHBOARD_URL
-
-# Set as environment variables for npm run build
-# React reads REACT_APP_* vars ONLY during build, not at runtime
-ENV REACT_APP_BACKEND_URL=${REACT_APP_BACKEND_URL}
-ENV REACT_APP_DASHBOARD_URL=${REACT_APP_DASHBOARD_URL}
-
-# Build the React app - REACT_APP_* vars are baked into the bundle
 RUN npm run build
 
 # Stage 2: Serve with nginx

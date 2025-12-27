@@ -10,9 +10,6 @@ pipeline {
         FRONTEND_IMAGE = "${DOCKERHUB_USERNAME}/quantedge-frontend:latest"
         DASHBOARD_IMAGE = "${DOCKERHUB_USERNAME}/quantedge-dashboard-new:latest"
         
-        // Build args for React apps
-        REACT_APP_BACKEND_URL = 'http://localhost:3002'
-        REACT_APP_DASHBOARD_URL = 'http://localhost:3001'
     }
     
     stages {
@@ -61,7 +58,7 @@ pipeline {
                         script {
                             echo 'Building dashboard-new image...'
                             bat """
-                                docker build -t ${DASHBOARD_IMAGE} --build-arg REACT_APP_BACKEND_URL=${REACT_APP_BACKEND_URL} -f dashboard-new/Dockerfile ./dashboard-new
+                                docker build -t ${DASHBOARD_IMAGE} -f dashboard-new/Dockerfile ./dashboard-new
                             """
                             
                             echo 'Pushing dashboard-new image to Docker Hub...'
@@ -77,7 +74,7 @@ pipeline {
                         script {
                             echo 'Building frontend image...'
                             bat """
-                                docker build -t ${FRONTEND_IMAGE} --build-arg REACT_APP_BACKEND_URL=${REACT_APP_BACKEND_URL} --build-arg REACT_APP_DASHBOARD_URL=${REACT_APP_DASHBOARD_URL} -f frontend/Dockerfile ./frontend
+                                docker build -t ${FRONTEND_IMAGE} -f frontend/Dockerfile ./frontend
                             """
                             
                             echo 'Pushing frontend image to Docker Hub...'

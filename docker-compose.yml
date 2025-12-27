@@ -33,9 +33,7 @@ services:
     build:
       context: ./dashboard-new
       dockerfile: Dockerfile
-      args:
-        # Build args for React build-time variables
-        REACT_APP_BACKEND_URL: http://localhost:3002
+      
     depends_on:
       - backend
     ports:
@@ -49,10 +47,7 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-      args:
-        # Build args for React build-time variables
-        REACT_APP_BACKEND_URL: http://localhost:3002
-        REACT_APP_DASHBOARD_URL: http://localhost:3001
+      
     depends_on:
       - backend
       - dashboard-new
